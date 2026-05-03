@@ -1,10 +1,9 @@
 # RNG-CLD-01 — OPERATION GRIDFALL
 # Cloud Zone Test Playbook
-# ============================================================
-# Format mirrors the AD range playbook.
+# ====================================
 # Run this end-to-end before every exercise session to confirm
 # all 5 machines are correctly configured and the pivot chain works.
-# ============================================================
+# ====================================
 
 ---
 
