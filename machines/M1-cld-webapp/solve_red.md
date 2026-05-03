@@ -1,4 +1,4 @@
-<img width="2011" height="878" alt="image" src="https://github.com/user-attachments/assets/e4764478-020f-4ef7-a1e4-09d4de9a56bc" /># Solve Guide — Red Team
+# Solve Guide — Red Team
 ## RNG-CLD-01 | M1 — cld-webapp | SSRF → Cloud Metadata Credential Theft
 **Technique:** T1552.005 — Cloud Instance Metadata API  
 **Difficulty:** ★★☆☆☆ | **Pivot In:** `cloud_api_key: pul-cloud-dev-aK8x2mP9!2024` (from Dev Zone M5 AWX output)
