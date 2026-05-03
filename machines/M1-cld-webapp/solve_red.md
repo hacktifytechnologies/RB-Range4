@@ -14,13 +14,16 @@ Steal the cloud IAM role credentials from the Cloud Metadata Service (IMDS) at `
 
 ```bash
 # Nmap service scan on M1
-nmap -sV -sC -p- 11.0.2.10 -oN m1_scan.txt
+nmap -sV -sC -p- 193.0.3.155 -oN m1_scan.txt
 
 # Key findings:
 # 8080/tcp  open  http  PUL Cloud Developer Portal
 ```
 
-Navigate to `http://11.0.2.10:8080` — you see a cloud portal login page.
+Navigate to `http://193.0.3.155:8080` — you see a cloud portal login page.
+
+<img width="1226" height="828" alt="image" src="https://github.com/user-attachments/assets/b9c304b9-23d9-4af2-83f8-698b27de2561" />
+
 
 ---
 
