@@ -22,7 +22,7 @@ nmap -sV -sC -p- 193.0.3.155 -oN m1_scan.txt
 
 Navigate to `http://193.0.3.155:8080` — you see a cloud portal login page.
 
-<img width="1226" height="828" alt="image" src="https://github.com/user-attachments/assets/b9c304b9-23d9-4af2-83f8-698b27de2561" />
+<img width="1245" height="949" alt="image" src="https://github.com/user-attachments/assets/19944f5a-98ef-467d-9e87-ace426bcf1b3" />
 
 
 ---
@@ -37,11 +37,15 @@ Username: cloud-dev
 Password: CloudDev@PUL2024!
 ```
 
+<img width="2042" height="1129" alt="image" src="https://github.com/user-attachments/assets/a0f7bf58-c437-41d1-a8ea-9793ef75e335" />
+
+
+
 **Option B: API key authentication** (useful for scripting)
 ```bash
 # The portal accepts X-Cloud-API-Key header on all authenticated routes
 curl -s -H "X-Cloud-API-Key: pul-cloud-dev-aK8x2mP9!2024" \
-    http://11.0.2.10:8080/dashboard
+    http://193.0.3.155:8080/dashboard
 ```
 
 ---
