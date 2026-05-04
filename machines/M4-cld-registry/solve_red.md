@@ -143,6 +143,9 @@ curl -s -X POST http://193.0.2.136:8080/api/v1/login \
 # {"token": "<jwt>", "role": "iam_user", "message": "Login successful"}
 ```
 
+<img width="2001" height="611" alt="image" src="https://github.com/user-attachments/assets/38e93894-6ea9-4e6b-a729-cdbecd0519be" />
+
+
 Pivot to M5 confirmed.
 
 ## Summary
