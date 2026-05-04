@@ -17,6 +17,11 @@ curl -s http://193.0.0.50/v2/
 # {}  (200 OK = registry is up, auth required for catalog)
 ```
 
+<img width="1255" height="498" alt="image" src="https://github.com/user-attachments/assets/ce4cc976-bfe0-478d-8681-922b33407c0d" />
+
+<img width="1158" height="348" alt="image" src="https://github.com/user-attachments/assets/f682d990-b480-421a-87a7-e71f86482a41" />
+
+
 ## Step 2 — Authenticate and Enumerate Images
 
 ```bash
@@ -30,6 +35,11 @@ curl -s -u "registry-admin:Reg!stry@CLD2024" \
     http://193.0.0.50/v2/pul-cloud/platform-svc/tags/list
 # {"name":"pul-cloud/platform-svc","tags":["latest","2.4.0","2.4.1"]}
 ```
+
+<img width="1070" height="213" alt="image" src="https://github.com/user-attachments/assets/adf49081-0361-4448-a786-78d4df00185c" />
+
+<img width="1316" height="225" alt="image" src="https://github.com/user-attachments/assets/948c9509-b2cb-416f-adf4-376266d3c999" />
+
 
 ## Step 3 — Fetch Image Manifest
 
@@ -50,6 +60,11 @@ The manifest contains a `config` section with a `digest` value (sha256 hash):
   "layers": [...]
 }
 ```
+
+<img width="1302" height="533" alt="image" src="https://github.com/user-attachments/assets/9f6392c5-9bf1-4d02-9876-cb3a5e5202a0" />
+
+<img width="1588" height="120" alt="image" src="https://github.com/user-attachments/assets/fe5e560b-82da-48f7-bd5f-ba0a838051d5" />
+
 
 Save the `config.digest` value — this is the image config blob.
 
@@ -88,6 +103,9 @@ CLOUD_IAM_PASS=IAm@CLD!2025
 APP_ENV=production
 PORT=8080
 ```
+
+<img width="948" height="509" alt="image" src="https://github.com/user-attachments/assets/eed933a9-ae09-4cc7-a3d3-6aefc2b67430" />
+
 
 ## Step 5 — Alternative: Pull Layer and Extract .env File
 
