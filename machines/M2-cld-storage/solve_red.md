@@ -29,6 +29,8 @@ aws s3 ls --endpoint-url http://193.0.1.91:9000
 #   pul-cloud-backups
 #   pul-cloud-internal
 ```
+<img width="2544" height="1438" alt="image" src="https://github.com/user-attachments/assets/e33c762c-53dd-4123-b148-ae184fa16d58" />
+
 
 ## Step 3 — Enumerate the Public Bucket (No Auth Required)
 
