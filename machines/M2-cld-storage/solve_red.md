@@ -54,6 +54,9 @@ k8s/cluster-info.txt
 README.txt
 ```
 
+<img width="2557" height="1473" alt="image" src="https://github.com/user-attachments/assets/7a077880-2af8-475c-909e-cb25e1633ada" />
+
+
 ## Step 4 — Download the Kubeconfig
 
 ```bash
@@ -65,6 +68,7 @@ curl -o cloud-ci-kubeconfig.yaml \
 cat cloud-ci-kubeconfig.yaml
 ```
 
+
 Key content:
 ```yaml
 users:
@@ -73,7 +77,10 @@ users:
     token: pul-cloud-ci-runner-token-2024gridfall
 ```
 
-The kubeconfig points to `https://11.0.2.30:6443` — the K3s API server on M3.
+<img width="1192" height="809" alt="image" src="https://github.com/user-attachments/assets/ad23e916-7eb7-4353-890c-23de480b7d35" />
+
+
+The kubeconfig points to `https://193.0.3.80:6443` — the K3s API server on M3.
 
 ## Step 5 — Verify Token Works Against M3
 
@@ -93,5 +100,5 @@ Pivot to M3 confirmed. Token grants read access to secrets in `pul-cloud` namesp
 | Misconfiguration | Public read+list policy on pul-cloud-backups bucket |
 | Stolen Artifact | k8s/cloud-ci-kubeconfig.yaml — K8s SA token |
 | K8s Token | pul-cloud-ci-runner-token-2024gridfall |
-| Next Target | M3 K3s API (11.0.2.30:6443) |
+| Next Target | M3 K3s API (193.0.3.80:6443) |
 | MITRE | T1530 |
