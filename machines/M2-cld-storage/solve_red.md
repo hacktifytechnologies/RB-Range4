@@ -94,6 +94,9 @@ kubectl get secrets -n pul-cloud
 
 Pivot to M3 confirmed. Token grants read access to secrets in `pul-cloud` namespace.
 
+<img width="1257" height="476" alt="image" src="https://github.com/user-attachments/assets/d993a486-6561-4226-a5f1-56ad4ed3ef8c" />
+
+
 ## Summary
 | Item | Value |
 |---|---|
