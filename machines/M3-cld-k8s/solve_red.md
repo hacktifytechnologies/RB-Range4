@@ -6,6 +6,9 @@
 ## Objective
 Use the stolen service account token to authenticate to the K3s API server, enumerate the over-privileged RBAC policy, and read the `registry-creds` secret to obtain credentials for the container registry on M4.
 
+<img width="1323" height="1149" alt="image" src="https://github.com/user-attachments/assets/069313fd-c36b-49a3-8f5b-c05b64b69d16" />
+
+
 ## Step 1 — Configure kubectl with Stolen Kubeconfig
 ```bash
 export KUBECONFIG=./cloud-ci-kubeconfig.yaml
