@@ -1,0 +1,23 @@
+id: GRIDFALL-CLD01-M5-BROKEN-ACCESS-CONTROL-AD-PIVOT
+name: GRIDFALL-Setup-M5-BrokenAccessControlADPivot
+description: >
+  Participant is presented with the PUL Cloud IAM Console on cld-iam suffering from a
+  Broken Function Level Authorization vulnerability (OWASP API Security Top 10 — API5:2023).
+  The AD integration export endpoint is presented in the UI as restricted to administrator
+  role accounts, but the server-side Flask route applies only JWT validity verification with
+  no role enforcement. Any authenticated user can call the endpoint directly and receive the
+  full AD integration configuration including the LDAP bind credentials for cyberange.local.
+  Participants must authenticate as the IAM service account, discover the unprotected API
+  endpoint, and exfiltrate the LDAP bind password enabling the pivot into the AD range via
+  LDAP Passback on SRV08-WEB.
+tactic: credential-access
+technique_id: T1078
+technique_name: Valid Accounts
+sub_technique: "Cloud Accounts"
+tag: "range"
+executors:
+  - name: sh
+    platform: linux
+    command: chmod +x /opt/pul-cloud-iam/app.py && systemctl is-active --quiet pul-cloud-iam && echo M5-challenge-active || systemctl start pul-cloud-iam
+    payloads: []
+    parsers: []

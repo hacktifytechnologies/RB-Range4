@@ -1,0 +1,22 @@
+id: GRIDFALL-CLD01-M4-IMAGE-ENV-CREDENTIAL-EXTRACTION
+name: GRIDFALL-Setup-M4-ContainerImageENVCredentialExtraction
+description: >
+  Participant is presented with a private OCI container registry on cld-registry hosting
+  the pul-cloud/platform-svc image. The image was built with ENV Dockerfile instructions
+  that embed IAM service account credentials directly in the image configuration layer.
+  These values are stored in cleartext within the OCI image config blob, retrievable via
+  a single authenticated Registry v2 API call without downloading the full image layers.
+  Participants must authenticate using registry credentials from M3, locate the config blob
+  digest in the manifest, download the blob, and parse the ENV section to extract IAM
+  credentials enabling access to the identity management console on M5.
+tactic: credential-access
+technique_id: T1552
+technique_name: Unsecured Credentials
+sub_technique: "Credentials In Files"
+tag: "range"
+executors:
+  - name: sh
+    platform: linux
+    command: chmod 600 /opt/pul-registry/auth/htpasswd && systemctl is-active --quiet pul-registry && echo M4-challenge-active || systemctl start pul-registry
+    payloads: []
+    parsers: []

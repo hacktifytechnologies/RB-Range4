@@ -1,0 +1,21 @@
+id: GRIDFALL-CLD01-M2-PUBLIC-BUCKET-KUBECONFIG
+name: GRIDFALL-Setup-M2-PublicBucketKubeconfigExposure
+description: >
+  Participant is presented with a MinIO S3-compatible object storage instance on cld-storage.
+  The pul-cloud-backups bucket has been misconfigured with an anonymous public read and list
+  policy, making all bucket contents accessible without credentials. The bucket contains a
+  Kubernetes kubeconfig file with a long-lived static service account token for the K3s
+  cluster on the next machine. Participants must enumerate the publicly accessible bucket,
+  download the kubeconfig artefact, and extract the Kubernetes bearer token required to
+  authenticate against the cluster API to progress the attack chain.
+tactic: collection
+technique_id: T1530
+technique_name: Data from Cloud Storage Object
+sub_technique: "None"
+tag: "range"
+executors:
+  - name: sh
+    platform: linux
+    command: chmod 644 /opt/pul-minio/bucket-policy-public.json && systemctl is-active --quiet pul-minio && echo M2-challenge-active || systemctl start pul-minio
+    payloads: []
+    parsers: []

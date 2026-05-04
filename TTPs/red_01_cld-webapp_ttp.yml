@@ -1,0 +1,21 @@
+id: GRIDFALL-CLD01-M1-SSRF-IMDS-CREDENTIAL-THEFT
+name: GRIDFALL-Setup-M1-SSRFtoIMDSCredentialTheft
+description: >
+  Participant is presented with the PUL Cloud Developer Portal running on cld-webapp.
+  The portal exposes a URL Health Checker utility that performs server-side HTTP requests
+  without any IP range validation or allowlist enforcement. The Cloud Instance Metadata
+  Service at the link-local address 169.254.169.254 is reachable through this SSRF sink,
+  allowing enumeration of the attached IAM role and theft of cloud credentials.
+  Participants must identify the vulnerable feature, enumerate the IMDS endpoint hierarchy,
+  and retrieve the IAM role credentials that are valid for the storage tier on M2.
+tactic: credential-access
+technique_id: T1552
+technique_name: Unsecured Credentials
+sub_technique: "Cloud Instance Metadata API"
+tag: "range"
+executors:
+  - name: sh
+    platform: linux
+    command: chmod +x /opt/pul-cloud-portal/app.py && systemctl is-active --quiet pul-cloud-portal && echo M1-challenge-active || systemctl start pul-cloud-portal
+    payloads: []
+    parsers: []

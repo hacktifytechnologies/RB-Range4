@@ -1,0 +1,21 @@
+id: GRIDFALL-CLD01-M3-K8S-RBAC-SECRETS-READ
+name: GRIDFALL-Setup-M3-KubernetesRBACSecretsRead
+description: >
+  Participant is presented with a K3s Kubernetes cluster on cld-k8s operating with an
+  over-privileged RBAC Role. The cloud-ci-runner service account has been granted get and
+  list permissions on the Secrets API resource within the pul-cloud namespace — a common
+  CI/CD misconfiguration. Combined with the static long-lived bearer token recovered from
+  the kubeconfig on M2, participants can authenticate to the Kubernetes API server and read
+  Secrets directly. The registry-creds Secret contains plaintext credentials for the
+  container registry on M4. Participants must enumerate the namespace and extract the secret.
+tactic: credential-access
+technique_id: T1552
+technique_name: Unsecured Credentials
+sub_technique: "Container API"
+tag: "range"
+executors:
+  - name: sh
+    platform: linux
+    command: chmod 600 /etc/rancher/k3s/tokens.csv && systemctl is-active --quiet k3s && echo M3-challenge-active || systemctl start k3s
+    payloads: []
+    parsers: []
